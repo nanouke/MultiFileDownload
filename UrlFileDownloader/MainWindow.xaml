@@ -1,0 +1,88 @@
+﻿<Window x:Class="UrlFileDownloader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UrlFileDownloader"
+        mc:Ignorable="d"
+        Title="Multi downlaod" Height="450" Width="800" WindowState="Maximized">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="Load file..."/>
+                <MenuItem Header="Close"/>
+            </MenuItem>
+            <MenuItem Header="Action">
+                <MenuItem Header="Dowload all"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <ProgressBar Name="progress" Width="100" Height="15" Margin="5,0" />
+            <Label Name="progressLabel" Content="Ready"></Label>
+        </StatusBar>
+        <Grid DockPanel.Dock="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Url file:"  TextAlignment="Right" Margin="0,5,5,0"  VerticalAlignment="Center" />
+            <TextBlock Name="tbSourceFile" Width="200" Grid.Column="1" Margin="0,5,5,0" VerticalAlignment="Center" />
+            <Button Name="btnBrowseInput" Content="Browse..." Grid.Column="2" Margin="0,5,5,0" Padding="5,2" Click="btnBrowseInput_Click"></Button>
+
+            <TextBlock Grid.Row="1"  Text="Download folder:" TextAlignment="Right" Margin="0,5,5,0"  VerticalAlignment="Center" />
+            <TextBlock Name="tbOutputFolder" Grid.Row="1" Width="200" Grid.Column="1" Margin="0,5,5,0" VerticalAlignment="Center" />
+            <Button Name="btnBrowseOutput" Grid.Row="1" Content="Browse..." Grid.Column="2" Margin="0,5,5,0" Padding="5,2" Click="btnBrowseOutput_Click"></Button>
+
+            <Button Name="btnDownload" Grid.Row="2" Grid.ColumnSpan="3" Content="Download" Margin="5" Click="btnDownload_Click" IsEnabled="False"></Button>
+            
+        </Grid>
+        <DataGrid AutoGenerateColumns="False" Name="dgLinks">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Name" Width="auto" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Url" Width="*" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Url}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Status" Width="100" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DownloadStatus}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Progress" Width="100" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ProgressBar Value="{Binding Progress}" Margin="2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Speed" Width="50" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Speed, StringFormat={}{0}kb/s }"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            
+        </DataGrid>
+    </DockPanel>
+</Window>
