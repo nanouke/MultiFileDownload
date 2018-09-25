@@ -10,7 +10,6 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using UrlFileDownloader.Vo;
 
 
     public class DownloaderManager : ObservableCollection<Download>
@@ -23,7 +22,7 @@
         private string destination;
 
 
-
+        public bool Completed { get { return this.completed; } }
 
         public int SimultaniusDownload{
             get { return this.simultaniusDownload; }
@@ -41,13 +40,26 @@
                 }
             }
         }
-        public double Progress { get => progress; set { progress = value; this.RaisePogressEventHandler(); } }
+        public double Progress { get => progress; set {
+                if(value < 0)
+                {
+                    value = 0.0;
+                }
+                if(value > 100.0)
+                {
+                    value = 100.0;
+                }
+                progress = value;
+                this.RaisePogressEventHandler();
+            }
+        }
 
         public DownloaderManager(int simultaniusDownload) : base()
         {
             this.SimultaniusDownload = simultaniusDownload;
             this.progress = 0.0;
             this.balancer = new Thread(runBalancer);
+            this.completed = false;
            
         }
 
@@ -67,9 +79,9 @@
         public void Start()
         {
             this.completed = false;
-            if (this.balancer.IsAlive)
+            if (this.balancer == null)
             {
-                this.balancer.Abort();
+                this.balancer = new Thread(runBalancer);
             }
             this.balancer.Start();
 
@@ -96,7 +108,8 @@
 
                 int completed = this.Where(x => x.DownloadStatus == Download.Status.Completed || x.DownloadStatus == Download.Status.Error).Count();
 
-                this.Progress = completed / this.Count() * 100;
+
+                this.Progress = (double)completed / (double)this.Count() * 100.0;
 
                 if (completed == this.Count)
                 {
@@ -104,8 +117,9 @@
                     break;
                 }
 
-
             }
+
+            this.balancer = null;
         }
 
         public delegate void ProgressEventHandler(object sender, double progression);

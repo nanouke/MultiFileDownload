@@ -5,7 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UrlFileDownloader"
         mc:Ignorable="d"
-        Title="Multi downlaod" Height="450" Width="800" WindowState="Maximized">
+        Title="Multi downlaod" Height="450" Width="800" WindowState="Maximized"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -16,16 +24,14 @@
                 <MenuItem Header="Dowload all"/>
             </MenuItem>
         </Menu>
-        <StatusBar DockPanel.Dock="Bottom">
-            <ProgressBar Name="progress" Width="100" Height="15" Margin="5,0" />
-            <Label Name="progressLabel" Content="Ready"></Label>
-        </StatusBar>
+
         <Grid DockPanel.Dock="Right">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
@@ -35,13 +41,34 @@
 
             <TextBlock Text="Url file:"  TextAlignment="Right" Margin="0,5,5,0"  VerticalAlignment="Center" />
             <TextBlock Name="tbSourceFile" Width="200" Grid.Column="1" Margin="0,5,5,0" VerticalAlignment="Center" />
-            <Button Name="btnBrowseInput" Content="Browse..." Grid.Column="2" Margin="0,5,5,0" Padding="5,2" Click="btnBrowseInput_Click"></Button>
+            <Button Name="btnBrowseInput" Grid.Column="2" Margin="0,5,5,0" Padding="5,2" Click="btnBrowseInput_Click" Style="{DynamicResource MaterialDesignFloatingActionDarkButton}" Width="32" Height="32">
+                <Viewbox Width="20" Height="20">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z" Fill="White" />
+                    </Canvas>
+                </Viewbox>
+            </Button>
 
             <TextBlock Grid.Row="1"  Text="Download folder:" TextAlignment="Right" Margin="0,5,5,0"  VerticalAlignment="Center" />
             <TextBlock Name="tbOutputFolder" Grid.Row="1" Width="200" Grid.Column="1" Margin="0,5,5,0" VerticalAlignment="Center" />
-            <Button Name="btnBrowseOutput" Grid.Row="1" Content="Browse..." Grid.Column="2" Margin="0,5,5,0" Padding="5,2" Click="btnBrowseOutput_Click"></Button>
+            <Button Name="btnBrowseOutput" Grid.Row="1" Grid.Column="2" Margin="0,5,5,0" Padding="5,2" Click="btnBrowseOutput_Click" Style="{DynamicResource MaterialDesignFloatingActionDarkButton}" Width="32" Height="32">
+                <Viewbox Width="20" Height="20">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z" Fill="White" />
+                    </Canvas>
+                </Viewbox>
+            </Button>
 
-            <Button Name="btnDownload" Grid.Row="2" Grid.ColumnSpan="3" Content="Download" Margin="5" Click="btnDownload_Click" IsEnabled="False"></Button>
+            <Canvas Grid.Row="4" Grid.ColumnSpan="3">
+                <Button Name="btnDownload" Click="btnDownload_Click" Canvas.Right="25" Canvas.Bottom="25" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}"   materialDesign:ButtonProgressAssist.IndicatorForeground="White" Width="72" Height="72" IsEnabled="False" ToolTip="Start download" materialDesign:ButtonProgressAssist.Minimum="0" materialDesign:ButtonProgressAssist.Maximum="100">
+                    <Viewbox Width="48" Height="48">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" Fill="White" />
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+                
+            </Canvas>
             
         </Grid>
         <DataGrid AutoGenerateColumns="False" Name="dgLinks">
@@ -74,10 +101,10 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Speed" Width="50" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Speed" Width="100" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Speed, StringFormat={}{0}kb/s }"/>
+                            <TextBlock Text="{Binding Speed, StringFormat={}{0:0.00} kb/s }"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

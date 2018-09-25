@@ -25,7 +25,8 @@ namespace UrlFileDownloader.Core
         };
 
         private Thread thread;
-        private Stopwatch startAt;
+        private DateTime lastUpdate;
+        private long lastBytes = 0;
 
         private double progress;
         private string error;
@@ -34,13 +35,22 @@ namespace UrlFileDownloader.Core
         private string destination;
         private double speed;
         private string name;
+        
 
         public double Progress { get => progress; set { progress = value; OnPropertyChanged("Progress"); } }
         public string Error { get => error; set { error = value; OnPropertyChanged("Error"); } }
         public Status DownloadStatus { get => status; private set { this.status = value; OnPropertyChanged("DownloadStatus"); } }
         public string Url { get => url; set { url = value; OnPropertyChanged("Url"); } }
         public string Destination { get => destination; set { this.destination = value; OnPropertyChanged("Destination"); } }
-        public double Speed { get => speed; set { speed = value; OnPropertyChanged("Speed"); } }
+        public double Speed { get => speed; set {
+                if(double.IsNaN(value) || double.IsInfinity(value))
+                {
+                    value = 0.0;
+                }
+                speed = value;
+                OnPropertyChanged("Speed");
+            }
+        }
         public string Name { get => name; set { name = value; OnPropertyChanged("Name"); } }
 
         public Download(string url, string name)
@@ -61,7 +71,6 @@ namespace UrlFileDownloader.Core
             }
 
             this.thread = new Thread(Downloading);
-            this.startAt = new Stopwatch();
             this.DownloadStatus = Status.InProgress;
             Debug.WriteLine("Sart Dwonaload of " + this.name);
             this.thread.Start();
@@ -84,7 +93,21 @@ namespace UrlFileDownloader.Core
             double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
 
             this.Progress = bytesIn / totalBytes * 100;
-            this.Speed = (e.BytesReceived / 1024d / this.startAt.Elapsed.TotalMilliseconds);
+            
+            if(lastBytes == 0)
+            {
+                this.lastUpdate = DateTime.Now;
+                this.lastBytes = e.BytesReceived;
+                return;
+            }
+
+            DateTime now = DateTime.Now;
+            TimeSpan timeSpan = now - lastUpdate;
+            long bytesChange = e.BytesReceived - lastBytes;
+            this.Speed = bytesChange / 1024d / timeSpan.TotalSeconds;
+
+            this.lastBytes = e.BytesReceived;
+            this.lastUpdate = now;
 
         }
 
@@ -98,9 +121,11 @@ namespace UrlFileDownloader.Core
                 if(fileInfo.Length > 0)
                 {
                     this.DownloadStatus = Status.Completed;
+                    
                     Debug.WriteLine("Completed Dwonaload of " + this.name);
                 }
             }
+            this.Speed = 0;
 
         }
 
