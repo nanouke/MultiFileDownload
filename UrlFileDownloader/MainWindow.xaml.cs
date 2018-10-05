@@ -29,7 +29,8 @@ namespace UrlFileDownloader
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int nbDownloadSameTime = 1;
+        private int nbDownloadSameTime = Properties.Settings.Default.SimultaneousDownload;
+        private char delimiter = Properties.Settings.Default.delimiter;
         private int defaultTryTodownload = 3;
         private string outputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
@@ -104,7 +105,7 @@ namespace UrlFileDownloader
 
                 foreach (string line in lines)
                 {
-                    String[] split = line.Split('[');
+                    String[] split = line.Split(this.delimiter);
                     Download download = new Download(split[0], split[1]);
                     this.downloaderManager.Add(download);
                 }
@@ -126,6 +127,18 @@ namespace UrlFileDownloader
             {
                 btnDownload.IsEnabled = false;
                 ButtonProgressAssist.SetIsIndicatorVisible(this.btnDownload, false);
+            }
+        }
+
+        private void menuOption_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigWindow configWindow = new ConfigWindow();
+
+            configWindow.ShowDialog();
+
+            if (configWindow.DialogResult == true)
+            {
+                this.nbDownloadSameTime = Properties.Settings.Default.SimultaneousDownload;
             }
         }
     }

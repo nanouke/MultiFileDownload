@@ -35,6 +35,7 @@ namespace UrlFileDownloader.Core
         private string destination;
         private double speed;
         private string name;
+        private double maxSpeed;
         
 
         public double Progress { get => progress; set { progress = value; OnPropertyChanged("Progress"); } }
@@ -47,11 +48,18 @@ namespace UrlFileDownloader.Core
                 {
                     value = 0.0;
                 }
+
+                if(this.maxSpeed < value)
+                {
+                    this.maxSpeed = value;
+                }
+
                 speed = value;
                 OnPropertyChanged("Speed");
             }
         }
         public string Name { get => name; set { name = value; OnPropertyChanged("Name"); } }
+        public double MaxSpeed { get => this.maxSpeed; }
 
         public Download(string url, string name)
         {
@@ -123,6 +131,10 @@ namespace UrlFileDownloader.Core
                     this.DownloadStatus = Status.Completed;
                     
                     Debug.WriteLine("Completed Dwonaload of " + this.name);
+                }
+                else
+                {
+                    File.Delete(this.Destination + "/" + this.name);
                 }
             }
             this.Speed = 0;
