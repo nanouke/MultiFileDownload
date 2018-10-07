@@ -61,6 +61,11 @@ namespace UrlFileDownloader.Core
         public string Name { get => name; set { name = value; OnPropertyChanged("Name"); } }
         public double MaxSpeed { get => this.maxSpeed; }
 
+        public Download() : this("", "")
+        {
+
+        }
+
         public Download(string url, string name)
         {
             this.url = url;

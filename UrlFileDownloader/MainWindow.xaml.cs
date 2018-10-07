@@ -50,11 +50,6 @@ namespace UrlFileDownloader
             
         }
 
-        private void btnBrowseInput_Click(object sender, RoutedEventArgs e)
-        {
-            this.loadInput();
-        }
-
         private void btnBrowseOutput_Click(object sender, RoutedEventArgs e)
         {
             this.loadOutput();
@@ -98,10 +93,10 @@ namespace UrlFileDownloader
 
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                tbSourceFile.Text = openFileDialog.FileName;
+                String source = openFileDialog.FileName;
 
 
-                String[] lines = File.ReadAllLines(this.tbSourceFile.Text);
+                String[] lines = File.ReadAllLines(source);
 
                 foreach (string line in lines)
                 {
@@ -140,6 +135,34 @@ namespace UrlFileDownloader
             {
                 this.nbDownloadSameTime = Properties.Settings.Default.SimultaneousDownload;
             }
+        }
+
+        private void btnLoadFile_Click(object sender, RoutedEventArgs e)
+        {
+            this.loadInput();
+        }
+
+        private void btnDeleteSelectedRow_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine(this.dgLinks.SelectedItems.GetType());
+            List<Download> downloads = this.dgLinks.SelectedItems.Cast<Download>().ToList();
+            if (downloads != null && downloads.Count() > 0)
+            {
+                foreach(Download d in downloads)
+                {
+                    this.downloaderManager.Remove(d);
+                }
+            }
+        }
+
+        private void btnAddRow_Click(object sender, RoutedEventArgs e)
+        {
+            this.downloaderManager.Add(new Download());
+        }
+
+        private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
+        {
+            this.downloaderManager.Clear();
         }
     }
 }
