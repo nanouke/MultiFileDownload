@@ -3,9 +3,18 @@ const {app, BrowserWindow, ipcMain, dialog} = require('electron')
 
 const fs = require('fs')
 
+const download = require('./Download')
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+
+let downloads = [];
+
+let simultaniousDownload = 3;
+
+let delimiterChar = '[';
+
 
 function createWindow () {
   // Create the browser window.
@@ -48,24 +57,32 @@ app.on('activate', function () {
   }
 })
 
-ipcMain.on('loadFile', (event, arg) =>{
+ipcMain.on('loadFile', (event, arg) => {
   let filePath = dialog.showOpenDialog({title: 'Import', 
   properties: ['openFile'], 
   filters: [{name: 'Text', extensions: ['txt']}]
   })
 
+
   if(filePath){
     let downloadArray = [];
-    let fileLines = fs.readFileSync(filePath.toString()).toString().split('\n');
+    let fileLines = fs.readFileSync(filePath.toString()).toString().trim('\t').split('\n');
 
-    for(let line in fileLines){
-      let split = line.split('[');
-      downloadArray.push({name: split[0], url: split[1]})
+    console.log(fileLines);
+
+    for(let l = 0; l < fileLines.length; l++){
+      let split = fileLines[l].split(delimiterChar);
+      downloadArray.push(new download(split[1],split[0]))
     }
 
-    event.sender.send('loadFileReply', downloadArray);
+    event.sender.send('loadFileReply', {"list": downloadArray, "error": null});
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+ipcMain.on('startDownload', (event, arg) => {
+
+  
+
+})
+
+
