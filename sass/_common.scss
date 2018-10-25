@@ -1,0 +1,13 @@
+body{
+    background-color: $background;
+}
+
+table{
+    &.table{
+        thead{
+            th{
+                color: $color-title;
+            }
+        }
+    }
+}

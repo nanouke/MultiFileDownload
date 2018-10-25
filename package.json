@@ -11,7 +11,10 @@
   "author": "nanouke",
   "license": "",
   "devDependencies": {
-    "electron": "^3.0.4"
+    "electron": "^3.0.4",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^4.0.2",
+    "node-sass": "^4.9.4"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.4.1"
