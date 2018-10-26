@@ -68,21 +68,11 @@ ipcMain.on('loadFile', (event, arg) => {
     let downloadArray = [];
     let fileLines = fs.readFileSync(filePath.toString()).toString().trim('\t').split('\n');
 
-    console.log(fileLines);
-
     for(let l = 0; l < fileLines.length; l++){
       let split = fileLines[l].split(delimiterChar);
       downloadArray.push(new download(split[1],split[0]))
     }
 
-    event.sender.send('loadFileReply', {"list": downloadArray, "error": null});
+    event.sender.send('refreshDownload', {"list": downloadArray, "error": null});
   }
 })
-
-ipcMain.on('startDownload', (event, arg) => {
-
-  
-
-})
-
-

@@ -1,8 +1,22 @@
 body {
-  background-color: #1e1e1e; }
+  background-color: #2d2d30; }
 
 table.table thead th {
+  color: #e4e6e8;
+  background: #2c2c2c; }
+
+table.table tbody tr td {
   color: #e4e6e8; }
+
+table.table tbody tr.selected {
+  background-color: #003c5a; }
+
+table.table-striped tbody tr {
+  background-color: #1e1e1e; }
+  table.table-striped tbody tr:nth-child(odd) {
+    background-color: #2d2d30; }
+  table.table-striped tbody tr.selected {
+    background-color: #003c5a; }
 
 .toolbar {
   background-color: #333333;

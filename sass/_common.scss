@@ -7,6 +7,33 @@ table{
         thead{
             th{
                 color: $color-title;
+                background: $background-tabs;
+            }
+        }
+        tbody{
+            tr{
+                td{
+                    color: $color-title;
+                }
+
+                &.selected{
+                    background-color: $background-selected;
+                }
+            }
+        }
+    }
+
+    &.table-striped{
+        tbody{
+            tr{
+                background-color: $background-dark;
+                &:nth-child(odd){
+                    background-color: $background;
+                }
+
+                &.selected{
+                    background-color: $background-selected;
+                }
             }
         }
     }

@@ -57,6 +57,7 @@ class Download{
         html += '<td>' + this.progress + '</td>';
         html += '<td>' + this.speed + '</td>';
         html += '<td>' + this.status + '</td>';
+        html += '<td><a class="btn-remove-item" data-url="' + this.url + '" title="Remove"><i class="fas fa-times"></i></a></td>'
         html += '</tr>';
 
         return html;

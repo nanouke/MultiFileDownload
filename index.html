@@ -10,7 +10,7 @@
   <body>
     <div id="top-toolbar" class="toolbar">
       <div class="btn-group" role="group" aria-label="">
-          <button type="button" class="btn btn-primary" title="Start download"><i class="fas fa-download"></i></button>
+          <button type="button" class="btn btn-primary" id="btnStartDownload" title="Start download"><i class="fas fa-download"></i></button>
           <button type="button" class="btn btn-primary" id="btnLoadFile" title="Import file"><i class="fas fa-file-import"></i></button>
       </div>
       <div class="btn-group" role="group" aria-label="">
@@ -29,6 +29,7 @@
             <th>Progress:</th>
             <th>Speed:</th>
             <th>Status:</th>
+            <th><span class="sr-only">Action:</span></th>
           </tr>
         </thead>
         <tbody id="downloadList">
