@@ -38,3 +38,28 @@ table{
         }
     }
 }
+
+@each $i, $color in $colors {
+    &.text-#{$i}{
+        color: #{$color};
+    }
+}
+
+.btn{
+    &.btn-none{
+        background-color: transparent;
+        padding: 2px 5px;
+    }
+}
+
+#alert-list-popup{
+    position: absolute;
+    bottom: 40px;
+    right: 10px;
+    display: block;
+    width: 350px;
+    background-color: $background-tabs;
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75);
+    color: #ffffff;
+}
+

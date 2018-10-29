@@ -1,17 +1,34 @@
 .toolbar{
     background-color: $background-toolbar;
     padding: 5px 3px;
-
+    display: flex;
     position: relative;
 
-    &:after{
-        content: '\f58e';
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
-        position: absolute;
-        top: 50%;
-        right: 5px;
-        transform: translateY(-50%);
-        color: $color-title;
+    .btn{
+        &.btn-tool{
+            margin: 0 2px;
+            background-color: transparent;
+            color: $color-title;
+            padding: 3px 5px;
+
+            &:hover{
+                background-color: $btn-tool-hover;
+            }
+
+            @each $i, $color in $colors {
+                &.#{$i}{
+                    color: #{$color};
+                }
+            }
+           
+        }
     }
+
+    .separator{
+        width: 1px;
+        display: block;
+        background-color: $separator-color;
+        margin: 0 2px;
+    }
+
 }
