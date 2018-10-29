@@ -65,7 +65,7 @@ class Download{
 
 
 };
-Download.statusEnum = {WAIT: 1, PROGRESS: 2, DONE: 3, ERROR: 4 };
+Download.statusEnum = {WAIT: 'wait', PROGRESS: 'progress', DONE: 'done', ERROR: 'error' };
 
 
 module.exports = Download;

@@ -2,6 +2,7 @@ const {ipcRenderer} = require('electron');
 const download = require('./Download');
 
 let downloadsList = [];
+let simmultaniousDownload = 5;
 
 $(function(){
 
@@ -37,7 +38,36 @@ $(function(){
 
     $('#btnStartDownload').click(function(){
 
+        while (!allDownloadsEnd()){
+
+            if(progressCount() < simmultaniousDownload ){
+
+            }
+
+        }
+
     });
 
 });
+
+function allDownloadsEnd() {
+    let result = true;
+    for(let i = 0; i < downloadsList.length; i++){
+       if(downloadsList[i].status != Download.statusEnum.DONE || Download.statusEnum.ERROR){
+           result = false;
+       }
+    }
+    return result;
+}
+
+function progressCount() {
+    let result = 0;
+
+    for(let i = 0; i < downloadsList.length; i++){
+        if(downloadsList[i].status == Download.statusEnum.PROGRESS){
+            result++;
+        }
+    }
+    return result;
+}
 

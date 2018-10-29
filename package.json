@@ -17,6 +17,7 @@
     "node-sass": "^4.9.4"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.4.1"
+    "@fortawesome/fontawesome-free": "^5.4.1",
+    "npm": "^6.4.1"
   }
 }
