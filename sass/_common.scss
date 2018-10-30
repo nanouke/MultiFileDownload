@@ -61,5 +61,32 @@ table{
     background-color: $background-tabs;
     box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75);
     color: #ffffff;
+    padding: 5px 5px;
+    text-transform: uppercase;
+    font-family: Roboto;
+    font-weight: 200;
+    font-size: 14px;
+
+    header{
+        display: flex;
+        margin: 0;
+        padding: 0;
+
+        p.title{
+            align-self: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .right{
+            align-self: flex-start;
+            margin-left: auto;
+            display: flex;
+
+            .btn{
+                padding: 0 5px;
+            }
+        }
+    }
 }
 
