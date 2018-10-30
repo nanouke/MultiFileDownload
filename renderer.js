@@ -1,11 +1,15 @@
 const {ipcRenderer} = require('electron');
 const download = require('./Download');
+const NotificationSystem = require('./Ui/NotificationSystem');
+const Notification = require('./Ui/Notification');
 
 let downloadsList = [];
 let simmultaniousDownload = 5;
 
 $(function(){
 
+    let notificationSystem = new NotificationSystem($('#notification-list'));
+    notificationSystem.add(new Notification("Notification 01"));
     let $downloadList = $('#downloadList');
 
     $('#btnLoadFile').click(function(){
@@ -46,6 +50,10 @@ $(function(){
 
         }
 
+    });
+
+    $(document).on('click','.btn-remove-notification', function(){
+        $(this).parent().parent().remove();
     });
 
 });

@@ -88,5 +88,22 @@ table{
             }
         }
     }
+
+    .notification{
+        display: flex;
+
+        .left{
+            align-self: center;
+            h3{
+                font-size: 18px;
+            }
+        }
+
+        .right{
+            align-self: center;
+            margin-left: auto;
+        }
+    }
+
 }
 

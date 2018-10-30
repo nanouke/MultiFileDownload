@@ -80,6 +80,15 @@ table.table-striped tbody tr {
       display: flex; }
       #alert-list-popup header .right .btn {
         padding: 0 5px; }
+  #alert-list-popup .notification {
+    display: flex; }
+    #alert-list-popup .notification .left {
+      align-self: center; }
+      #alert-list-popup .notification .left h3 {
+        font-size: 18px; }
+    #alert-list-popup .notification .right {
+      align-self: center;
+      margin-left: auto; }
 
 .toolbar {
   background-color: #333333;
